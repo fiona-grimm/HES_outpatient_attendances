@@ -37,3 +37,9 @@ rsconnect/
 
 # Plotly credentials
 plotly.R
+
+# Raw data
+*.xlsx
+
+# Graph outputs
+*.pdf
