@@ -31,15 +31,16 @@ attendance_counts <- read_xlsx(path = filename, sheet = 'Summary Report 3', skip
 
 attendance_counts_long <- attendance_counts %>% 
   # Combine hospital and patient cancellations
-  mutate(`Cancellations` = `Patient cancellations` + `Hospital cancellations`) %>% 
+  mutate(Cancelled = `Patient cancellations` + `Hospital cancellations`) %>% 
+  rename(Missed = `Did not attends (DNAs)`, Attended = Attendances) %>% 
   select(-`Patient cancellations`, -`Hospital cancellations`) %>% 
   gather(-Year, key = 'Attendance type', value = 'Count') %>% 
   group_by(Year) %>% 
   mutate(pct = 100*(Count / Count[`Attendance type` == 'Total']),
          Attendance_type = fct_relevel(`Attendance type`, c('Unknown', # first factor level ends up at the top
-                                                            'Did not attends (DNAs)',
-                                                            'Cancellations',
-                                                            'Attendances'))) %>% 
+                                                            'Missed',
+                                                            'Cancelled',
+                                                            'Attended'))) %>% 
   filter(`Attendance type` != 'Total')
 
 # 5. Plot ----
