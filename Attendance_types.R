@@ -132,18 +132,16 @@ sex_age_plot <- attendance_sex_age_long %>%
   ggplot(aes(x = `Age (yrs)`, y = Count/1000000, group = Type, fill = Type, text = paste('<br>Appointments:', Count,  '<br>Percent:', round(pct,2), '%'))) +
   geom_bar(stat = 'identity', position = position_stack()) +
   facet_grid(. ~ Sex) + 
-  coord_flip() +
   theme(axis.line = element_blank(),
         axis.text = element_text(colour = my_dark_grey),
-        #axis.text.x = element_text(angle = -45, vjust = -2, hjust = 0.7, colour = my_dark_grey),
+        axis.text.x = element_text(angle = 90, vjust = 0.4, hjust = 0, colour = my_dark_grey),
         axis.text.y = element_text(colour = my_dark_grey),
         axis.ticks = element_blank(),
         axis.title = element_text(colour = my_dark_grey),
-        axis.title.x = element_blank(),
         panel.background = element_blank(),
         panel.border = element_blank(),
         panel.grid = element_blank(),
-        panel.grid.major.x = element_line(colour = my_lighter_grey),
+        panel.grid.major.y = element_line(colour = my_lighter_grey),
         plot.caption = element_text(colour = my_lighter_blue, hjust = 0),
         plot.title = element_text(colour = my_blue),
         plot.subtitle = element_text(colour = my_blue),
