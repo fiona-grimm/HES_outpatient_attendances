@@ -78,7 +78,6 @@ attendance_plot <- attendance_counts_long %>%
         legend.position = 'top',
         legend.spacing.x = unit(5, 'pt'),
         legend.spacing.y = unit(15, 'pt')) + 
-  labs(title = 'NHS hospital outpatient appointments') +
   ylab('Number of appointments [millions]') +
   scale_fill_manual(values = rev(c(my_blue, my_light_blue, my_red, my_light_grey))) +
   guides(fill = guide_legend(ncol = 3, 
@@ -88,7 +87,7 @@ attendance_plot <- attendance_counts_long %>%
                              reverse = TRUE))
 
 # Save locally
-ggsave('OP_attend_count.pdf', attendance_plot, device='pdf',  width = 7, height = 5)
+ggsave('OP_attend_count.png', attendance_plot, device='png',  width = 7, height = 5)
 
 # Convert to interactive plot
 attendance_plot_inter <- ggplotly(attendance_plot, tooltip = c('text')) %>% 
@@ -152,7 +151,6 @@ sex_age_plot <- attendance_sex_age_long %>%
         legend.position = 'top',
         legend.spacing.x = unit(5, 'pt'),
         legend.spacing.y = unit(15, 'pt')) + 
-  labs(title = 'NHS hospital outpatient attendances') +
   ylab('Number of appointments [millions]') +
   xlab('Age') +
   scale_fill_manual(values = rev(c(my_blue, my_light_blue))) +
@@ -163,7 +161,7 @@ sex_age_plot <- attendance_sex_age_long %>%
                              reverse = TRUE))
 
 # Save locally
-ggsave('OP_sex_age_count.pdf', sex_age_plot, device='pdf',  width = 7, height = 5)
+ggsave('OP_sex_age_count.png', sex_age_plot, device='png',  width = 7, height = 5)
 
 
 # Convert to interactive plot
