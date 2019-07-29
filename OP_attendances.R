@@ -1,7 +1,7 @@
 #===============================================================================
 # Purpose: Visualisation of NHS Outpatient Appointment data
-# Authour: Fiona Grimm
-# Date: 06/2019
+# Author: Fiona Grimm
+# Date: 07/2019
 #===============================================================================
 
 # 1. Import packages ----
@@ -29,9 +29,9 @@ my_dark_grey <- '#524c48'
 my_light_grey <- '#e2dfd8'
 my_lighter_grey <- '#eeede8'
 my_blue <- '#005078'
-my_lighter_blue <- '#7fbfda'
-my_light_blue <- '#53a9cd'
+my_lighter_blue <- '#AAD4E6'
 my_red <- '#dd0031'
+my_light_red <- '#F2A1A3'
 
 # 4. Importing, wrangle and plot attendance types  ----
 
@@ -79,7 +79,7 @@ attendance_plot <- attendance_counts_long %>%
         legend.spacing.x = unit(5, 'pt'),
         legend.spacing.y = unit(15, 'pt')) + 
   ylab('Number of appointments [millions]') +
-  scale_fill_manual(values = rev(c(my_blue, my_light_blue, my_red, my_light_grey))) +
+  scale_fill_manual(values = rev(c(my_blue, my_lighter_blue, my_red, my_light_grey))) +
   guides(fill = guide_legend(ncol = 3, 
                              byrow = FALSE, 
                              label.hjust = 0,
@@ -153,7 +153,7 @@ sex_age_plot <- attendance_sex_age_long %>%
         legend.spacing.y = unit(15, 'pt')) + 
   ylab('Number of appointments [millions]') +
   xlab('Age') +
-  scale_fill_manual(values = rev(c(my_blue, my_light_blue))) +
+  scale_fill_manual(values = rev(c(my_red, my_lighter_blue))) +
   guides(fill = guide_legend(ncol = 1, 
                              byrow = FALSE, 
                              label.hjust = 0,
