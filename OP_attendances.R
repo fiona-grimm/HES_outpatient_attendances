@@ -103,7 +103,7 @@ api_create(attendance_plot_inter, filename = "HES_outpatient_attendance")
 attendance_sex_age <- read_xlsx(path = filename, sheet = 'Summary Report 8', skip = 3, n_max = 19) %>% 
   select(1:4)
 
-age_bins <- c("0 - 4", 
+age_bins <- str_c(c("0 - 4", 
               "5 - 9", "10 - 14",
               "15 - 19", "20 - 24",
               "25 - 29", "30 - 34",
@@ -112,14 +112,15 @@ age_bins <- c("0 - 4",
               "55 - 59", "60 - 64",
               "65 - 69", "70 - 74",
               "75 - 79", "80 - 84",
-              "85 - 89", "90+")
+              "85 - 89", "90+"), ' years')
 
 attendance_sex_age_long <- attendance_sex_age %>% 
   # Combine hospital and patient cancellations
   rename(Maternity = `Female (maternity)`) %>% 
   gather(-`Age (yrs)`, key = 'Sex', value = 'Count') %>% 
   mutate(Maternity = ifelse(Sex == 'Maternity', 'maternity', 'other'),
-         Sex = ifelse(Maternity == 'maternity', 'Female', Sex)) %>% 
+         Sex = ifelse(Maternity == 'maternity', 'Female', Sex),
+         `Age (yrs)` = str_c(`Age (yrs)`, ' years')) %>% 
   spread(key = 'Maternity', value = 'Count') %>% 
   gather(-`Age (yrs)`, - Sex, key = 'Type', value = 'Count') %>% 
   mutate(pct = (Count / sum(Count, na.rm = TRUE))*100,
@@ -130,13 +131,14 @@ attendance_sex_age_long <- attendance_sex_age %>%
 sex_age_plot <- attendance_sex_age_long %>% 
   ggplot(aes(x = `Age (yrs)`, y = Count/1000000, group = Type, fill = Type, text = paste('<br>Appointments:', Count,  '<br>Percent:', round(pct,2), '%'))) +
   geom_bar(stat = 'identity', position = position_stack()) +
-  facet_grid(. ~ Sex) + 
+  facet_grid(Sex ~ .) + 
   theme(axis.line = element_blank(),
         axis.text = element_text(colour = my_dark_grey),
-        axis.text.x = element_text(angle = 90, vjust = 0.4, hjust = 0, colour = my_dark_grey),
+        axis.text.x = element_text(angle = -45, vjust = -3, hjust = 0.8, colour = my_dark_grey),
         axis.text.y = element_text(colour = my_dark_grey),
         axis.ticks = element_blank(),
         axis.title = element_text(colour = my_dark_grey),
+        axis.title.x = element_blank(),
         panel.background = element_blank(),
         panel.border = element_blank(),
         panel.grid = element_blank(),
